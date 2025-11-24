@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "partials/property_nav.html" %}
+<h2>Connect with us</h2>
+<div class="grid">
+  {% if p.instagram_url %}
+  <a class="card social" href="{{ p.instagram_url }}" target="_blank" rel="noopener">
+    <h3>Instagram</h3>
+    <p class="muted">@{{ p.name }}</p>
+  </a>
+  {% endif %}
+  {% if p.facebook_url %}
+  <a class="card social" href="{{ p.facebook_url }}" target="_blank" rel="noopener">
+    <h3>Facebook</h3>
+    <p class="muted">Follow our updates</p>
+  </a>
+  {% endif %}
+  {% if p.tiktok_url %}
+  <a class="card social" href="{{ p.tiktok_url }}" target="_blank" rel="noopener">
+    <h3>TikTok</h3>
+    <p class="muted">Short tips & clips</p>
+  </a>
+  {% endif %}
+  {% if p.whatsapp_url %}
+  <a class="card social" href="{{ p.whatsapp_url }}" target="_blank" rel="noopener">
+    <h3>WhatsApp</h3>
+    <p class="muted">Tap to chat</p>
+  </a>
+  {% endif %}
+  {% if p.phone_number %}
+  <a class="card social" href="tel:{{ p.phone_number }}">
+    <h3>Call us</h3>
+    <p class="muted">{{ p.phone_number }}</p>
+  </a>
+  {% endif %}
+  {% if p.email_address %}
+  <a class="card social" href="mailto:{{ p.email_address }}">
+    <h3>Email</h3>
+    <p class="muted">{{ p.email_address }}</p>
+  </a>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}{% include "partials/property_nav.html" %}
+<h2>House Rules</h2>
+<div class="list">
+{% for r in p.rules %}
+  <div class="item">
+    <h3>{{ r.title }}</h3>
+    <p>{{ r.description }}</p>
+    {% if r.rationale %}<p class="muted">Why: {{ r.rationale }}</p>{% endif %}
+    {% if r.penalty %}<span class="badge">Fee: {{ r.penalty }}</span>{% endif %}
+  </div>
+{% else %}<p class="muted">No rules yet.</p>{% endfor %}
+</div>{% endblock %}

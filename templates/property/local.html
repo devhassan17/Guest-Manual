@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}{% include "partials/property_nav.html" %}
+<h2>Local Guide</h2>
+<div class="grid">{% for l in p.locals %}
+  <div class="card">
+    <div class="pill">{{ l.category }}</div>
+    <h4>{{ l.name }}</h4>
+    <p>{{ l.blurb }}</p>
+    <p class="muted">{{ l.address }}</p>
+    <div class="tags">{% if l.hours %}<span>Hours: {{ l.hours }}</span>{% endif %}{% if l.price %}<span>Price: {{ l.price }}</span>{% endif %}</div>
+    <p>{% if l.map_link %}<a class="btn" target="_blank" href="{{ l.map_link }}">Map</a>{% endif %}
+    {% if l.link %}<a class="btn ghost" target="_blank" href="{{ l.link }}">Website</a>{% endif %}</p>
+  </div>
+{% else %}<p class="muted">No recommendations yet.</p>{% endfor %}</div>
+{% endblock %}

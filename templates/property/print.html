@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ p.name }} — Guest Manual</h1>
+<p class="muted">{{ p.address_display }}</p>
+<hr>
+<h2>Essentials</h2>
+<ul>
+  <li>Wi‑Fi: <strong>{{ p.wifi_ssid }}</strong> / {{ p.wifi_password }}</li>
+  <li>Check‑in: {{ p.checkin_time }} / Check‑out: {{ p.checkout_time }}</li>
+  {% if p.map_url %}<li>Map: {{ p.map_url }}</li>{% endif %}
+</ul>
+<h2>Rules</h2>
+<ol>
+  {% for r in p.rules %}<li><strong>{{ r.title }}</strong>: {{ r.description }}</li>{% endfor %}
+</ol>
+<h2>How‑tos</h2>
+<ul>
+  {% for h in p.howtos %}<li>{{ h.area }} — {{ h.appliance }} ({{ h.brand_model }}): {{ h.how }}</li>{% endfor %}
+</ul>
+<h2>Emergency</h2>
+<ul>
+  {% for e in p.emergencies %}<li>{{ e.etype }} — {{ e.name }}: {{ e.phone }} ({{ e.when }})</li>{% endfor %}
+</ul>
+<h2>Local</h2>
+<ul>
+  {% for l in p.locals %}<li>{{ l.category }} — {{ l.name }}: {{ l.address }} {{ l.hours and '(' ~ l.hours ~ ')' }}</li>{% endfor %}
+</ul>
+<p class="muted">Tip: Use your browser “Print → Save as PDF”.</p>
+{% endblock %}

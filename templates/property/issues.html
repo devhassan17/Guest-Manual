@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}{% include "partials/property_nav.html" %}
+<h2>Issues & Reporting</h2>
+<div class="list">{% for i in p.issues %}
+  <div class="item">
+    <h4>{{ i.category }}</h4>
+    <p><strong>Try first:</strong> {{ i.try_first }}</p>
+    <p><strong>When to contact us:</strong> {{ i.when_to_contact }}</p>
+    <p class="muted"><strong>Info we need:</strong> {{ i.info_needed }}</p>
+  </div>
+{% else %}<p class="muted">No flows yet.</p>{% endfor %}</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}{% include "partials/property_nav.html" %}
+<h2>Emergencies & Contacts</h2>
+<table class="table"><thead><tr><th>Type</th><th>Name</th><th>Phone</th><th>When</th><th>Address</th></tr></thead>
+<tbody>{% for e in p.emergencies %}
+<tr><td>{{ e.etype }}</td><td>{{ e.name }}</td><td><a href="tel:{{ e.phone }}">{{ e.phone }}</a></td><td>{{ e.when }}</td><td>{{ e.address }}</td></tr>
+{% else %}<tr><td colspan="5">No entries yet.</td></tr>{% endfor %}</tbody></table>
+{% endblock %}

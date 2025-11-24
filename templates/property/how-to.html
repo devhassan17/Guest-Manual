@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}{% include "partials/property_nav.html" %}
+<h2>Appliances & How-tos</h2>
+
+<div class="howto-grid">
+{% for h in p.howtos %}
+  <div class="card howto">
+    <div class="pill">{{ h.area or 'General' }}</div>
+    <h3>{{ h.appliance }} <small class="muted">{{ h.brand_model }}</small></h3>
+    <p class="desc">{{ h.how }}</p>
+    <div>
+      <a class="btn" href="{{ url_for('property_howto_detail', slug=p.slug, id=h.id) }}">Manual</a>
+      {% if h.issues %}<span class="badge" style="margin-left:8px">Tips available</span>{% endif %}
+    </div>
+    {% if h.issues %}<p class="muted small" style="margin-top:8px">Common issues: {{ h.issues }}</p>{% endif %}
+  </div>
+{% else %}<p class="muted">No items yet.</p>{% endfor %}
+</div>
+{% endblock %}

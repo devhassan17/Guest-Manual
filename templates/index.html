@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Properties</h1>
+<div class="grid">
+  {% for p in props %}
+  <a class="card" href="{{ url_for('property_home', slug=p.slug) }}">
+    <h3>{{ p.name }}</h3>
+    <p class="muted">{{ p.address_display }}</p>
+    <div class="tags">
+      <span>Wi‑Fi: {{ p.wifi_ssid or '—' }}</span>
+      <span>Check-in: {{ p.checkin_time or '—' }}</span>
+      <span>Check-out: {{ p.checkout_time or '—' }}</span>
+    </div>
+  </a>
+  {% else %}
+  <p class="muted">No properties yet. Add one in Admin.</p>
+  {% endfor %}
+</div>
+{% endblock %}

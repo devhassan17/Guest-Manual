@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ 'Edit' if p else 'New' }} Property</h1>
+<form method="post" class="form">
+  <div class="grid two">
+    <label>Slug <input name="slug" value="{{ p.slug if p else '' }}" required></label>
+    <label>Name <input name="name" value="{{ p.name if p else '' }}" required></label>
+  </div>
+  <label>Address <input name="address_display" value="{{ p.address_display if p else '' }}"></label>
+  <label>Map URL <input name="map_url" value="{{ p.map_url if p else '' }}"></label>
+  <div class="grid two">
+    <label>Check‑in <input name="checkin_time" value="{{ p.checkin_time if p else '' }}"></label>
+    <label>Check‑out <input name="checkout_time" value="{{ p.checkout_time if p else '' }}"></label>
+  </div>
+  <div class="grid two">
+    <label>Wi‑Fi SSID <input name="wifi_ssid" value="{{ p.wifi_ssid if p else '' }}"></label>
+    <label>Wi‑Fi Password <input name="wifi_password" value="{{ p.wifi_password if p else '' }}"></label>
+  </div>
+  <label>Parking <textarea name="parking">{{ p.parking if p else '' }}</textarea></label>
+  <label>Quiet Hours <input name="quiet_hours" value="{{ p.quiet_hours if p else '' }}"></label>
+  <label>Notes <textarea name="notes">{{ p.notes if p else '' }}</textarea></label>
+
+  <h3>Images (online URLs)</h3>
+  <label>Hero Image URL <input name="hero_url" placeholder="https://..." value="{{ p.hero_url if p else '' }}"></label>
+  <label>Gallery Image URLs (comma separated) <textarea name="gallery_urls" placeholder="https://..., https://..., https://...">{{ p.gallery_urls if p else '' }}</textarea></label>
+
+  <h3>Social & Contact</h3>
+  <div class="grid two">
+    <label>Instagram URL <input name="instagram_url" value="{{ p.instagram_url if p else '' }}" placeholder="https://instagram.com/..."></label>
+    <label>Facebook URL  <input name="facebook_url"  value="{{ p.facebook_url if p else '' }}"  placeholder="https://facebook.com/..."></label>
+  </div>
+  <div class="grid two">
+    <label>TikTok URL    <input name="tiktok_url"    value="{{ p.tiktok_url if p else '' }}"    placeholder="https://www.tiktok.com/@..."></label>
+    <label>WhatsApp URL  <input name="whatsapp_url"  value="{{ p.whatsapp_url if p else '' }}"  placeholder="https://wa.me/447911123456"></label>
+  </div>
+  <div class="grid two">
+    <label>Phone Number  <input name="phone_number"  value="{{ p.phone_number if p else '' }}"  placeholder="+44 7..."></label>
+    <label>Email Address <input name="email_address" value="{{ p.email_address if p else '' }}" placeholder="hello@example.com"></label>
+  </div>
+
+  <div class="actions">
+    <button class="btn">Save</button>
+    <a class="btn ghost" href="{{ url_for('admin_dashboard') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

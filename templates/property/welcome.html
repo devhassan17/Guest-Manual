@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "partials/property_nav.html" %}
+
+<section class="hero">
+  <div class="hero-media" style="background-image:url('{{ p.hero_url or '' }}');"></div>
+  <div class="hero-body">
+    <h1>{{ p.name }}</h1>
+    <p class="muted">{{ p.address_display }}</p>
+    <div class="quick-cards">
+      <div class="qc"><strong>Wi‑Fi</strong><br>{{ p.wifi_ssid or '—' }}<br><code>{{ p.wifi_password or '' }}</code></div>
+      <div class="qc"><strong>Check-in</strong><br>{{ p.checkin_time or '—' }}</div>
+      <div class="qc"><strong>Check-out</strong><br>{{ p.checkout_time or '—' }}</div>
+      <div class="qc"><strong>Quiet Hours</strong><br>{{ p.quiet_hours or '—' }}</div>
+    </div>
+    {% if p.map_url %}<p style="margin-top:12px"><a class="btn" href="{{ p.map_url }}" target="_blank">Open in Maps</a></p>{% endif %}
+
+    <div class="qr-wrap" style="margin-top:16px">
+      <img src="{{ url_for('property_qr', slug=p.slug) }}"
+           alt="QR to this manual"
+           onerror="this.style.display='none'"
+           style="height:120px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:6px">
+    </div>
+
+    {% set urls = (p.gallery_urls.split(',') if p.gallery_urls else []) %}
+    {% if urls %}
+    <div class="gallery" id="gallery" style="margin-top:16px">
+      {% for u in urls %}
+      {% set u2 = u.strip() %}
+      {% if u2 %}<div class="ph"><img data-maybe="{{ u2 }}" alt="Photo of {{ p.name }}"></div>{% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <h3 style="margin-top:18px">Contact us</h3>
+    <form method="post" action="{{ url_for('create_message', slug=p.slug) }}" class="form">
+      <div class="grid two">
+        <label>Name <input name="name" placeholder="Your name"></label>
+        <label>Contact <input name="contact" placeholder="WhatsApp or phone"></label>
+      </div>
+      <label>Category
+        <input name="category" placeholder="Internet / Cleaning / Keys / Other">
+      </label>
+      <label>Message
+        <textarea name="body" placeholder="Tell us what's happening..."></textarea>
+      </label>
+      <button class="btn">Send</button>
+    </form>
+
+  </div>
+</section>
+{% endblock %}

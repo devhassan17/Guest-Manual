@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}{% include "partials/property_nav.html" %}
+<h2>FAQs</h2>
+<div class="accordion">{% for f in p.faqs %}
+  <details><summary>{{ f.q }}</summary><div class="answer">{{ f.a }}</div>{% if f.related %}<div class="muted">Related: {{ f.related }}</div>{% endif %}</details>
+{% else %}<p class="muted">No FAQs yet.</p>{% endfor %}</div>
+{% endblock %}

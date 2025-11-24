@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="admin-top">
+  <h1>Admin</h1>
+  <div class="actions">
+    <a class="btn" href="{{ url_for('admin_property_form') }}">+ New Property</a>
+    <a class="btn ghost" href="{{ url_for('admin_logout') }}">Logout</a>
+  </div>
+</div>
+<table class="table">
+  <thead><tr><th>Property</th><th>Slug</th><th>Wi‑Fi</th><th>Check-in/out</th><th>Hero</th><th>Views (30d)</th><th>QR</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for p in props %}
+    <tr>
+      <td><a href="{{ url_for('property_home', slug=p.slug) }}" target="_blank">{{ p.name }}</a></td>
+      <td>{{ p.slug }}</td>
+      <td>{{ p.wifi_ssid }}</td>
+      <td>{{ p.checkin_time }} / {{ p.checkout_time }}</td>
+      <td>{% if p.hero_url %}<a href="{{ p.hero_url }}" target="_blank">image</a>{% else %}—{% endif %}</td>
+      <td>{{ views.get(p.id, 0) }}</td>
+      <td><img src="{{ url_for('property_qr', slug=p.slug) }}" style="height:48px;border:1px solid #e6efee;border-radius:6px;background:#fff;padding:4px"></td>
+      <td>
+        <a class="btn small" href="{{ url_for('admin_property_form', pid=p.id) }}">Edit</a>
+        <a class="btn small" href="{{ url_for('admin_property_manage', pid=p.id) }}">Manage</a>
+
+        <form method="post" action="{{ url_for('admin_property_delete', pid=p.id) }}" style="display:inline" onsubmit="return confirm('Delete property?');">
+          <button class="btn small danger">Delete</button>
+          
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

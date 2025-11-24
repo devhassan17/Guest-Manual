@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}{% include "partials/property_nav.html" %}
+<h2>Check‑out</h2>
+<ol class="steps">{% for s in p.checkout_steps|sort(attribute='step') %}
+  <li><h4>Step {{ s.step }} — {{ s.title }}</h4><p>{{ s.body }}</p>{% if s.notes %}<div class="tip">{{ s.notes }}</div>{% endif %}</li>
+{% else %}<p class="muted">No steps yet.</p>{% endfor %}</ol>
+{% endblock %}

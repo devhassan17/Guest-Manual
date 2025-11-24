@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}{% include "partials/property_nav.html" %}
+<p><a href="{{ url_for('property_section', slug=p.slug, section='how-to') }}" class="btn ghost">← Back to How-tos</a></p>
+
+<h1>{{ h.appliance }} <small class="muted">{{ h.brand_model }}</small></h1>
+<p class="muted">Area: {{ h.area or 'General' }}</p>
+
+<div class="card prose">
+  <h3>How to Use</h3>
+  <div>{{ h.how|safe }}</div>
+</div>
+
+{% if h.issues %}
+<div class="card prose">
+  <h3>Common Issues</h3>
+  <div>{{ h.issues|safe }}</div>
+</div>
+{% endif %}
+
+{% if h.manual_url %}
+<p><a class="btn" target="_blank" href="{{ h.manual_url }}">Open Manufacturer Manual</a></p>
+{% endif %}
+{% endblock %}

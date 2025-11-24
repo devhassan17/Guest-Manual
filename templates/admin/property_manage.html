@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Manage: {{ p.name }}</h1>
+<p class="muted">{{ p.address_display }}</p>
+<p>
+  <a class="btn" href="{{ url_for('property_home', slug=p.slug) }}" target="_blank">Open Manual</a>
+  <a class="btn ghost" href="{{ url_for('admin_property_form', pid=p.id) }}">Edit Property</a>
+</p>
+
+<div class="grid two">
+
+  <!-- FAQs -->
+  <section class="card">
+    <h2>FAQs</h2>
+    <form method="post" action="{{ url_for('admin_add_faq', pid=p.id) }}" class="form">
+      <label>Question <input name="q" required></label>
+      <label>Answer <textarea name="a" required></textarea></label>
+      <label>Related <input name="related" placeholder="wifi, heating, keys"></label>
+      <button class="btn">Add FAQ</button>
+    </form>
+    <div class="list" style="margin-top:10px">
+      {% for f in p.faqs %}
+      <div class="item">
+        <strong>{{ f.q }}</strong>
+        <p class="muted">{{ f.a|truncate(160, True) }}</p>
+        <form method="post" action="{{ url_for('admin_delete_faq', id=f.id) }}" onsubmit="return confirm('Delete FAQ?')">
+          <button class="btn small danger">Delete</button>
+        </form>
+      </div>
+      {% else %}<p class="muted">No FAQs yet.</p>{% endfor %}
+    </div>
+  </section>
+
+  <!-- Emergency -->
+  <section class="card">
+    <h2>Emergency</h2>
+    <form method="post" action="{{ url_for('admin_add_emergency', pid=p.id) }}" class="form">
+      <div class="grid two">
+        <label>Type <input name="etype" placeholder="Police / Fire / Hospital"></label>
+        <label>Name <input name="name"></label>
+      </div>
+      <div class="grid two">
+        <label>Phone <input name="phone" placeholder="+44 ..."></label>
+        <label>When to use <input name="when" placeholder="24/7 / only emergencies"></label>
+      </div>
+      <label>Address <input name="address"></label>
+      <label>Notes <textarea name="notes"></textarea></label>
+      <button class="btn">Add Emergency</button>
+    </form>
+    <div class="list" style="margin-top:10px">
+      {% for e in p.emergencies %}
+      <div class="item">
+        <strong>{{ e.etype }}</strong> — {{ e.name }} · {{ e.phone }}
+        <div class="muted">{{ e.when }}</div>
+        <form method="post" action="{{ url_for('admin_delete_emergency', id=e.id) }}" onsubmit="return confirm('Delete?')">
+          <button class="btn small danger">Delete</button>
+        </form>
+      </div>
+      {% else %}<p class="muted">No emergency entries yet.</p>{% endfor %}
+    </div>
+  </section>
+
+  <!-- Local places -->
+  <section class="card">
+    <h2>Local Places</h2>
+    <form method="post" action="{{ url_for('admin_add_local', pid=p.id) }}" class="form">
+      <div class="grid two">
+        <label>Category <input name="category" placeholder="Cafe / Grocery / Gym"></label>
+        <label>Name <input name="name"></label>
+      </div>
+      <label>Blurb <textarea name="blurb" placeholder="Why we recommend it"></textarea></label>
+      <label>Address <input name="address"></label>
+      <div class="grid two">
+        <label>Google Map Link <input name="map_link" placeholder="https://maps.google.com/..."></label>
+        <label>Hours <input name="hours" placeholder="Mon–Sun 7–22"></label>
+      </div>
+      <div class="grid two">
+        <label>Website <input name="link" placeholder="https://..."></label>
+        <label>Price <input name="price" placeholder="££"></label>
+      </div>
+      <button class="btn">Add Place</button>
+    </form>
+    <div class="list" style="margin-top:10px">
+      {% for l in p.locals %}
+      <div class="item">
+        <strong>{{ l.category }}</strong> — {{ l.name }} <span class="muted">({{ l.price or '—' }})</span>
+        <div class="muted">{{ l.address }}</div>
+        <form method="post" action="{{ url_for('admin_delete_local', id=l.id) }}" onsubmit="return confirm('Delete?')">
+          <button class="btn small danger">Delete</button>
+        </form>
+      </div>
+      {% else %}<p class="muted">No local places yet.</p>{% endfor %}
+    </div>
+  </section>
+
+  <!-- How-tos -->
+  <section class="card">
+    <h2>How-tos / Appliances</h2>
+    <form method="post" action="{{ url_for('admin_add_howto', pid=p.id) }}" class="form">
+      <div class="grid two">
+        <label>Area <input name="area" placeholder="Kitchen / Bathroom / Bedroom"></label>
+        <label>Appliance <input name="appliance" placeholder="Oven / Heater / Boiler"></label>
+      </div>
+      <div class="grid two">
+        <label>Brand/Model <input name="brand_model" placeholder="Bosch Series 4"></label>
+        <label>Manual URL <input name="manual_url" placeholder="https://..."></label>
+      </div>
+      <label>How to use <textarea name="how" placeholder="Step-by-step..."></textarea></label>
+      <label>Common issues <textarea name="issues" placeholder="If it won’t start, check..."></textarea></label>
+      <button class="btn">Add How-to</button>
+    </form>
+    <div class="list" style="margin-top:10px">
+      {% for h in p.howtos %}
+      <div class="item">
+        <strong>{{ h.area }}</strong> — {{ h.appliance }} <span class="muted">{{ h.brand_model }}</span>
+        <form method="post" action="{{ url_for('admin_delete_howto', id=h.id) }}" onsubmit="return confirm('Delete?')">
+          <button class="btn small danger">Delete</button>
+        </form>
+      </div>
+      {% else %}<p class="muted">No how-tos yet.</p>{% endfor %}
+    </div>
+  </section>
+
+  <!-- Check-in -->
+  <section class="card">
+    <h2>Check-in Steps</h2>
+    <form method="post" action="{{ url_for('admin_add_checkin', pid=p.id) }}" class="form">
+      <div class="grid two">
+        <label>Step # <input name="step" type="number" min="0" value="1"></label>
+        <label>Title <input name="title"></label>
+      </div>
+      <label>Body <textarea name="body"></textarea></label>
+      <div class="grid two">
+        <label>Image URL <input name="image" placeholder="https://..."></label>
+        <label>Video URL <input name="video" placeholder="https://..."></label>
+      </div>
+      <label>Tip <input name="tip" placeholder="Helpful hint"></label>
+      <button class="btn">Add Check-in Step</button>
+    </form>
+    <div class="list" style="margin-top:10px">
+      {% for s in p.checkin_steps|sort(attribute='step') %}
+      <div class="item">
+        <strong>Step {{ s.step }}</strong> — {{ s.title }}
+        <form method="post" action="{{ url_for('admin_delete_checkin', id=s.id) }}" onsubmit="return confirm('Delete?')">
+          <button class="btn small danger">Delete</button>
+        </form>
+      </div>
+      {% else %}<p class="muted">No steps yet.</p>{% endfor %}
+    </div>
+  </section>
+
+  <!-- Check-out -->
+  <section class="card">
+    <h2>Check-out Steps</h2>
+    <form method="post" action="{{ url_for('admin_add_checkout', pid=p.id) }}" class="form">
+      <div class="grid two">
+        <label>Step # <input name="step" type="number" min="0" value="1"></label>
+        <label>Title <input name="title"></label>
+      </div>
+      <label>Body <textarea name="body"></textarea></label>
+      <label>Notes <textarea name="notes" placeholder="Where to leave keys, bins, etc."></textarea></label>
+      <button class="btn">Add Check-out Step</button>
+    </form>
+    <div class="list" style="margin-top:10px">
+      {% for s in p.checkout_steps|sort(attribute='step') %}
+      <div class="item">
+        <strong>Step {{ s.step }}</strong> — {{ s.title }}
+        <form method="post" action="{{ url_for('admin_delete_checkout', id=s.id) }}" onsubmit="return confirm('Delete?')">
+          <button class="btn small danger">Delete</button>
+        </form>
+      </div>
+      {% else %}<p class="muted">No steps yet.</p>{% endfor %}
+    </div>
+  </section>
+
+  <!-- Contacts -->
+  <section class="card">
+    <h2>Contacts</h2>
+    <form method="post" action="{{ url_for('admin_add_contact', pid=p.id) }}" class="form">
+      <div class="grid two">
+        <label>Role <input name="role" placeholder="Host / Cleaner / Maintenance"></label>
+        <label>Name <input name="name"></label>
+      </div>
+      <div class="grid two">
+        <label>Phone <input name="phone" placeholder="+44 ..."></label>
+        <label>WhatsApp <input name="whatsapp" placeholder="+44 ..."></label>
+      </div>
+      <button class="btn">Add Contact</button>
+    </form>
+    <div class="list" style="margin-top:10px">
+      {% for c in p.contacts %}
+      <div class="item">
+        <strong>{{ c.role }}</strong> — {{ c.name }} · {{ c.phone }}
+        <form method="post" action="{{ url_for('admin_delete_contact', id=c.id) }}" onsubmit="return confirm('Delete?')">
+          <button class="btn small danger">Delete</button>
+        </form>
+      </div>
+      {% else %}<p class="muted">No contacts yet.</p>{% endfor %}
+    </div>
+  </section>
+
+</div>
+{% endblock %}
