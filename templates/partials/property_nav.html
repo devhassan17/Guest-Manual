@@ -1,13 +1,14 @@
 <nav class="prop-nav">
-  <a href="{{ url_for('property_home', slug=p.slug) }}">Welcome</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='check-in') }}">Check‑in</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='rules') }}">Rules</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='how-to') }}">How‑tos</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='issues') }}">Issues</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='emergency') }}">Emergency</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='local') }}">Local</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='checkout') }}">Check‑out</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='faqs') }}">FAQs</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='social') }}">Social</a>
-  <a href="{{ url_for('property_section', slug=p.slug, section='print') }}">Print</a>
+  <a href="{{ url_for('property_home', slug=p.slug) }}" class="{% if section == 'welcome' %}active{% endif %}">Welcome</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='check-in') }}" class="{% if section == 'check-in' %}active{% endif %}">Check‑in</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='rules') }}" class="{% if section == 'rules' %}active{% endif %}">Rules</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='how-to') }}" class="{% if section == 'how-to' %}active{% endif %}">How‑tos</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='issues') }}" class="{% if section == 'issues' %}active{% endif %}">Issues</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='emergency') }}" class="{% if section == 'emergency' %}active{% endif %}">Emergency</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='local') }}" class="{% if section == 'local' %}active{% endif %}">Local</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='checkout') }}" class="{% if section == 'checkout' %}active{% endif %}">Check‑out</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='faqs') }}" class="{% if section == 'faqs' %}active{% endif %}">FAQs</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='social') }}" class="{% if section == 'social' %}active{% endif %}">Social</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='print') }}" class="{% if section == 'print' %}active{% endif %}">Print</a>
+  <a href="{{ url_for('property_section', slug=p.slug, section='reviews') }}" class="{% if section == 'reviews' %}active{% endif %}">Reviews</a>
 </nav>

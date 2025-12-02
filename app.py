@@ -65,17 +65,17 @@ def create_app():
     def property_home(slug):
         prop = Property.query.filter_by(slug=slug).first_or_404()
         log_view(prop, "welcome")
-        return render_template("property/welcome.html", p=prop)
+        return render_template("property/welcome.html", p=prop, section="welcome")
 
     @app.route("/p/<slug>/<section>")
     def property_section(slug, section):
         prop = Property.query.filter_by(slug=slug).first_or_404()
-        sections = ["welcome","check-in","rules","how-to","issues","emergency","local","checkout","faqs","social","print"]
+        sections = ["welcome","check-in","rules","how-to","issues","emergency","local","checkout","faqs","social","print","reviews"]
         if section not in sections:
             abort(404)
         tpl = f"property/{section}.html"
         log_view(prop, section)
-        return render_template(tpl, p=prop)
+        return render_template(tpl, p=prop, section=section)
 
     # How-to detail page (Manual button)
     @app.route("/p/<slug>/howto/<int:id>")
